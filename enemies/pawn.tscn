@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://ce3o6lxxfh7iy"]
+
+[ext_resource type="Texture2D" uid="uid://dw3dt1cuwai13" path="res://assets/Tiny Swords/Factions/Knights/Troops/Pawn/Red/Pawn_Red.png" id="1_bb1v8"]
+[ext_resource type="Script" uid="uid://cgilumxierfgh" path="res://enemies/behaviors/follow_player.gd" id="1_ldgsm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ldgsm"]
+atlas = ExtResource("1_bb1v8")
+region = Rect2(0, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0sfi"]
+atlas = ExtResource("1_bb1v8")
+region = Rect2(192, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jfxr"]
+atlas = ExtResource("1_bb1v8")
+region = Rect2(384, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mp2c6"]
+atlas = ExtResource("1_bb1v8")
+region = Rect2(576, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cxb3o"]
+atlas = ExtResource("1_bb1v8")
+region = Rect2(768, 192, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djt8g"]
+atlas = ExtResource("1_bb1v8")
+region = Rect2(960, 192, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1kngl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ldgsm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s0sfi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jfxr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mp2c6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cxb3o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djt8g")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ojeh"]
+radius = 18.0
+height = 46.0
+
+[node name="Pawn" type="CharacterBody2D" unique_id=125962753]
+motion_mode = 1
+script = ExtResource("1_ldgsm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=84704122]
+position = Vector2(0, -24)
+sprite_frames = SubResource("SpriteFrames_1kngl")
+autoplay = "default"
+frame_progress = 0.45495087
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2025875670]
+position = Vector2(0, -23)
+shape = SubResource("CapsuleShape2D_4ojeh")
