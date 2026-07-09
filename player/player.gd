@@ -17,6 +17,7 @@ var direction: Vector2 = Vector2(0, 0)
 
 
 func _process(delta: float) -> void:
+	GameManager.player_position = position
 
 #Voltar player pro padrão após a animação de ataque
 	#Atualizar temporizador do ataque
