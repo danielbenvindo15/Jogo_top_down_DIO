@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://ce3o6lxxfh7iy"]
 
 [ext_resource type="Texture2D" uid="uid://dw3dt1cuwai13" path="res://assets/Tiny Swords/Factions/Knights/Troops/Pawn/Red/Pawn_Red.png" id="1_bb1v8"]
-[ext_resource type="Script" uid="uid://cgilumxierfgh" path="res://enemies/behaviors/follow_player.gd" id="1_ldgsm"]
+[ext_resource type="Script" uid="uid://8raed3sv4n5k" path="res://enemies/enemy.gd" id="1_ldgsm"]
+[ext_resource type="Script" uid="uid://cgilumxierfgh" path="res://enemies/behaviors/follow_player.gd" id="3_s0sfi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ldgsm"]
 atlas = ExtResource("1_bb1v8")
@@ -70,3 +71,6 @@ frame_progress = 0.45495087
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2025875670]
 position = Vector2(0, -23)
 shape = SubResource("CapsuleShape2D_4ojeh")
+
+[node name="FollowPlayer" type="Node" parent="." unique_id=1108551913]
+script = ExtResource("3_s0sfi")

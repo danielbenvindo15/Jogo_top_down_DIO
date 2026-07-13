@@ -1,13 +1,23 @@
-extends CharacterBody2D
+extends Node
 
 
 #Variáveis
 #----------------------------------#
 #Variável que define a velocidade em px/s
 @export var speed: float = 120
+#Variável que liga o Script de seguir o jogador ao script enemy.gd
+var enemy: Enemy
 #Variável que relaciona o script do pawn com o sprite dele
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+var sprite: AnimatedSprite2D
 
+
+
+
+func _ready():
+	enemy = get_parent()
+	sprite = enemy.get_node("AnimatedSprite2D")
+	enemy.health
+	pass
 
 func _physics_process(delta: float) -> void:
 	
@@ -15,11 +25,11 @@ func _physics_process(delta: float) -> void:
 	
 	# Define direção do inimigo:
 	var player_position = GameManager.player_position
-	var difference = player_position - position
+	var difference = player_position - enemy.position
 	var input_vector = difference.normalized()
 	
 	# Define velocidade do inimigo:
-	velocity = input_vector * speed
+	enemy.velocity = enemy.input_vector * enemy.speed
 	
 	#------ Sistema de rotação e espelhamento de Sprite ------#
 	
@@ -33,4 +43,4 @@ func _physics_process(delta: float) -> void:
 		pass
 	
 	
-	move_and_slide()
+	enemy.move_and_slide()
