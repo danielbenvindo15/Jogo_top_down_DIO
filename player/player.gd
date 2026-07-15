@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer #O @onready faz com que a variável dita na linha seja inicializada apenas após o carregamento do node.
+@onready var sword_area: Area2D = $SwordArea
 
 #Variáveis booleanas
 var attackAnimation1: bool = true  #Variável responsável pelo switch das animações 1 e 2 de ataque
@@ -13,7 +14,12 @@ var attackCoolDown: float = 0.0  #Variável responsável por resetar o isAttacki
 #Variáveis Vector2
 var direction: Vector2 = Vector2(0, 0)
 
+#----------------- Variáveis Exportadas -----------------#
+
+#Variável de velocidade
 @export var speed = 300
+#Variável para dano de ataque
+@export var sword_damage: int = 2
 
 
 func _process(delta: float) -> void:
@@ -40,15 +46,16 @@ func _process(delta: float) -> void:
 		
 	
 	#Espelha o personagem de acordo com a posição
-	if direction.x > 0 :
-		#Desmarcar flip_h do Sprite2D
-		sprite.flip_h = false
-		pass
-	elif direction.x < 0 :
-		#Marcar o flip_h do Sprite2D
-		sprite.flip_h = true
-		pass
-	
+	if not isAttacking:  #Garante que não haverá o bug de virar enquanto ataca
+		if direction.x > 0 :
+			#Desmarcar flip_h do Sprite2D
+			sprite.flip_h = false
+			pass
+		elif direction.x < 0 :
+			#Marcar o flip_h do Sprite2D
+			sprite.flip_h = true
+			pass
+		
 
 
 func _physics_process(delta: float) -> void: #Essa função é executada em uma frequência fixa na qual se mantem a mesma independente do fps, sendo essa função recomendada para executar a física do jogo.
@@ -92,7 +99,8 @@ func attack() -> void:
 	if isAttacking:
 		return
 	
-	#Toca Animação
+	#------------------ Toca Animação ----------------------#
+	
 	#Player_AttackSide
 	if direction.y == 0: 
 		if attackAnimation1 : #Player_AttackSide1
@@ -103,8 +111,9 @@ func attack() -> void:
 			animation_player.play("Player_AttackSide2")
 			attackAnimation1 = true
 			pass
-		
-	elif direction.y < 0 : #Player_AttackUp
+
+	#Player_AttackUp
+	elif direction.y < 0 :
 		
 		if attackAnimation1 :#Player_AttackUp1
 			animation_player.play("Player_AttackUp1")
@@ -114,8 +123,9 @@ func attack() -> void:
 			animation_player.play("Player_AttackUp2")
 			attackAnimation1 = true
 			pass
-		
-	else : #Player_AttackDown
+
+	#Player_AttackDown
+	else :
 		
 		if attackAnimation1 :#Player_AttackDown1
 			animation_player.play("Player_AttackDown1")
@@ -127,10 +137,50 @@ func attack() -> void:
 			pass
 	
 	
-	#Configurar temporizador
+	#------------ Configurar temporizador --------------#
+	#Define o cooldown do ataque
 	attackCoolDown = 0.6
 	
-	#Marcar Ataque
+	#--------- Marcar Ataque -------------#
 	isAttacking = true
 	
+	#------------- Aplicar dano nos inimigos ------------#
+	
 	pass
+	
+
+func deal_damage_to_enemies() -> void :
+	
+	#-------------- Acessar todos os inimigos ----------------#
+	#Pega todos os inimigos que estão dentro da área de alcance da espada
+	var bodies = sword_area.get_overlapping_bodies()
+	
+	#Variável que importa as características de vida do inimigo 
+ 
+	
+	#-------- Chamar a função "damage" (COM sword_damage como 1º parametro) -----------------#
+	for body in bodies:
+		if body.is_in_group("enemies"): #Essa seção vasculha todos os objetos presentes na cena e pega todos os que pertencem ao grupo "enemies"
+			var enemy: Enemy = body
+			
+			var direction_to_enemy = (enemy.position - position).normalized()
+			var attack_direction: Vector2
+			
+		#------------------------- Verifica direção de ataque ------------------#
+			if direction.y < 0:   #Ataque para cima
+				attack_direction = Vector2.UP
+			elif direction.y > 0 :  #Ataque para baixo
+				attack_direction = Vector2.DOWN
+			elif sprite.flip_h: #Ataque para a esquerda
+				attack_direction = Vector2.LEFT
+			else :  #Ataque para a direita
+				attack_direction = Vector2.RIGHT
+			
+		#----------------------- Faz a comparação de vetores da posição do inimigo com a direção do ataque do Player --------------------------#
+			var dot_product = direction_to_enemy.dot(attack_direction)
+			
+		#----------------------- Chama a função que dá dano no inimigo ----------------#
+			#Processamento que verifica se o inimigo está na área de ataque da espada
+			if dot_product >= 0.3 :
+				enemy.damage(sword_damage)
+		pass

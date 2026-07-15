@@ -29,7 +29,7 @@ func _physics_process(delta: float) -> void:
 	var input_vector = difference.normalized()
 	
 	# Define velocidade do inimigo:
-	enemy.velocity = enemy.input_vector * enemy.speed
+	enemy.velocity = input_vector * speed
 	
 	#------ Sistema de rotação e espelhamento de Sprite ------#
 	
