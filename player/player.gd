@@ -3,6 +3,9 @@ extends CharacterBody2D
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer #O @onready faz com que a variável dita na linha seja inicializada apenas após o carregamento do node.
 @onready var sword_area: Area2D = $SwordArea
+@onready var hitbox_area: Area2D = $HitboxArea
+@onready var hitbox_cooldown: float = 0.0
+
 
 #Variáveis booleanas
 var attackAnimation1: bool = true  #Variável responsável pelo switch das animações 1 e 2 de ataque
@@ -20,6 +23,10 @@ var direction: Vector2 = Vector2(0, 0)
 @export var speed = 300
 #Variável para dano de ataque
 @export var sword_damage: int = 2
+#Variável para saúde
+@export var health: int = 25
+#Variável responsável por definir a animação de morte
+@export var death_prefab: PackedScene
 
 
 func _process(delta: float) -> void:
@@ -45,7 +52,7 @@ func _process(delta: float) -> void:
 				animation_player.play("Player_Idle")
 		
 	
-	#Espelha o personagem de acordo com a posição
+	#Espelha o personagem de acordo com a posição:
 	if not isAttacking:  #Garante que não haverá o bug de virar enquanto ataca
 		if direction.x > 0 :
 			#Desmarcar flip_h do Sprite2D
@@ -55,7 +62,9 @@ func _process(delta: float) -> void:
 			#Marcar o flip_h do Sprite2D
 			sprite.flip_h = true
 			pass
-		
+	
+	#Processar dano
+	update_hitbox_detection(delta)
 
 
 func _physics_process(delta: float) -> void: #Essa função é executada em uma frequência fixa na qual se mantem a mesma independente do fps, sendo essa função recomendada para executar a física do jogo.
@@ -184,3 +193,55 @@ func deal_damage_to_enemies() -> void :
 			if dot_product >= 0.3 :
 				enemy.damage(sword_damage)
 		pass
+
+
+func update_hitbox_detection(delta: float) -> void:
+	#Frame de invencibilidade:
+	hitbox_cooldown -= delta
+	if hitbox_cooldown > 0 : return
+	
+	#Define o tempo do frame de invencibilidade:
+	hitbox_cooldown = 0.5
+	
+	#Pega todos os corpos da cena:
+	var bodies = hitbox_area.get_overlapping_bodies() 
+	
+	#Laço de repetição para atribuir dano ao encostar no inimigo
+	for body in bodies: 
+		if body.is_in_group("enemies"): #Essa linha serve para diferenciar inimigos de demais corpos coletados na variável bodies
+			var enemy: Enemy = body
+			var damage_amount = 1
+			damage(damage_amount) #Chama a função de receber dano
+	
+	pass
+
+func damage(amount: int) -> void:
+	#Verifica se está vivo
+	if health <= 0 : return
+	#Checa dano
+	health -= amount
+	print("dano recebido Player: ", amount, " vida total: ", health)
+	
+	#------------ Efeito de dano --------------#
+	modulate = Color("#9D2228")
+	#Cria um efeito de "transição no inimigo"
+	var tween = create_tween()
+	#Diz o tipo de tranzição
+	tween.set_ease(Tween.EASE_IN)
+	#Define a animação da tranzição
+	tween.set_trans(Tween.TRANS_QUINT)
+	#Define as propriedades da transição criada acima
+	tween.tween_property(self, "modulate", Color.WHITE, 0.3)
+	#Processar morte
+	if health <= 0: 
+		die()
+
+
+func die() -> void :
+	if death_prefab:
+		var death_object = death_prefab.instantiate()
+		death_object.position = position
+		get_parent().add_child(death_object)
+	
+	print("Game Over!")
+	queue_free()

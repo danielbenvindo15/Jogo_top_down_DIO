@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cuev62k7t0wqh" path="res://assets/Tiny Swords/Factions/Knights/Troops/Dead/Dead.png" id="1_74hsu"]
 
-[sub_resource type="Animation" id="Animation_4uvxi"]
+[sub_resource type="Animation" id="Animation_74hsu"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -17,9 +17,9 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_po7xm"]
-resource_name = "default"
-length = 2.3
+[sub_resource type="Animation" id="Animation_4uvxi"]
+resource_name = "new_animation"
+length = 2.40001
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -28,10 +28,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 1.6, 1.7, 1.8000001, 1.9000001, 2, 2.1000001, 2.2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 1.7, 1.8000001, 1.9000001, 2, 2.1000001, 2.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -48,17 +48,17 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_vukv4"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_po7xm"]
 _data = {
-&"RESET": SubResource("Animation_4uvxi"),
-&"default": SubResource("Animation_po7xm")
+&"RESET": SubResource("Animation_74hsu"),
+&"new_animation": SubResource("Animation_4uvxi")
 }
 
-[node name="Skull" type="Sprite2D" unique_id=1695930098]
+[node name="skull" type="Sprite2D" unique_id=928471832]
 texture = ExtResource("1_74hsu")
 hframes = 7
 vframes = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1077048040]
-libraries/ = SubResource("AnimationLibrary_vukv4")
-autoplay = &"default"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1406444885]
+libraries/ = SubResource("AnimationLibrary_po7xm")
+autoplay = &"new_animation"
