@@ -6,21 +6,27 @@ extends Node2D
 @export var death_prefab: PackedScene
 
 func damage(amount: int) -> void:
-	#Checa dano
+	##Checa dano:
 	health -= amount
 	print("dano recebido: ", amount, " vida total: ", health)
 	
-	#------------ Efeito de dano --------------#
+	##------------ Efeito de dano --------------##
+	
 	modulate = Color("#9D2228")
-	#Cria um efeito de "transição no inimigo"
+	
+	# - Cria um efeito de "transição no inimigo"
 	var tween = create_tween()
-	#Diz o tipo de tranzição
+	
+	# - Diz o tipo de tranzição
 	tween.set_ease(Tween.EASE_IN)
-	#Define a animação da tranzição
+	
+	# - Define a animação da tranzição
 	tween.set_trans(Tween.TRANS_QUINT)
-	#Define as propriedades da transição criada acima
+	
+	# - Define as propriedades da transição criada acima
 	tween.tween_property(self, "modulate", Color.WHITE, 0.3)
-	#Processar morte
+	
+	# - Processar morte
 	if health <= 0: 
 		die()
 

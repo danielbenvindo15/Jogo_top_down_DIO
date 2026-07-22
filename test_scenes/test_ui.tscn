@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://dnqmx64gl6xsx"]
+
+[ext_resource type="PackedScene" uid="uid://ddau2ymi7i01d" path="res://player/player.tscn" id="1_5xndj"]
+
+[node name="TestUi" type="Node2D" unique_id=1327757322]
+
+[node name="Player" parent="." unique_id=1691786204 instance=ExtResource("1_5xndj")]
+position = Vector2(346, 334)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=785067647]
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer" unique_id=647256136]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -45.5
+offset_top = 23.0
+offset_right = 45.5
+offset_bottom = 46.0
+grow_horizontal = 2
+text = "08:50"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=784841316]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -372.0
+offset_top = 17.0
+offset_right = -49.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="MeatLabel" type="Label" parent="CanvasLayer/Panel" unique_id=739315155]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.5
+offset_top = -11.5
+offset_right = -24.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "50 Meat"
+
+[node name="GoldLabel" type="Label" parent="CanvasLayer/Panel" unique_id=1502086557]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 5.5
+offset_top = -11.5
+offset_right = 96.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "20.000 Gold"

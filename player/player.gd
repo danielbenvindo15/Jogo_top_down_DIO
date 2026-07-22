@@ -1,4 +1,6 @@
+class_name Player  #Dá um rótulo para o nosso Script, nesse caso o rótulo é "Player".
 extends CharacterBody2D
+
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer #O @onready faz com que a variável dita na linha seja inicializada apenas após o carregamento do node.
@@ -12,26 +14,47 @@ var attackAnimation1: bool = true  #Variável responsável pelo switch das anima
 var isRunning: bool = false  #Variável para ver se o personagem está correndo
 var wasRunning = isRunning #Variável pra tranzição de animação do isRunning
 var isAttacking: bool = false  #Variável responsável por ver se o personagem está na animação de ataque
-var attackCoolDown: float = 0.0  #Variável responsável por resetar o isAttacking
 
+#Variáveis float
+var attackCoolDown: float = 0.0  #Variável responsável por resetar o isAttacking
+var ritual_cooldown = 0.0
 #Variáveis Vector2
 var direction: Vector2 = Vector2(0, 0)
 
 #----------------- Variáveis Exportadas -----------------#
 
-#Variável de velocidade
+#Variável de velocidade (em px/s)
+@export_category("Speed")
 @export var speed = 300
+
+
 #Variável para dano de ataque
+@export_category("Sword")
 @export var sword_damage: int = 2
-#Variável para saúde
+
+#Parte responsável por cuidar das configurações do ritual
+@export_category("Ritual")
+@export var ritual_damage: int = 1
+@export var ritual_interval: float = 30.0
+@export var ritual_scene : PackedScene
+
+#Variável para definir o nível de vida do player
+@export_category("Health")
 @export var health: int = 25
+@export var max_health: int = 25 #Variável para definir a vida máxima do player
+
 #Variável responsável por definir a animação de morte
+@export_category("Death Animation")
 @export var death_prefab: PackedScene
 
 
 func _process(delta: float) -> void:
 	GameManager.player_position = position
 
+	# Ritual
+	update_ritual(delta)
+	
+	
 #Voltar player pro padrão após a animação de ataque
 	#Atualizar temporizador do ataque
 	if isAttacking :
@@ -215,6 +238,18 @@ func update_hitbox_detection(delta: float) -> void:
 	
 	pass
 
+func update_ritual(delta: float) -> void:
+	#Atualiza temporizador
+	ritual_cooldown -= delta
+	if ritual_cooldown > 0: return
+	ritual_cooldown = ritual_interval #Reseta o temporizador
+	
+	#Cria ritual
+	var ritual = ritual_scene.instantiate()
+	ritual.damage_amount = ritual_damage
+	add_child(ritual)
+
+
 func damage(amount: int) -> void:
 	#Verifica se está vivo
 	if health <= 0 : return
@@ -245,3 +280,10 @@ func die() -> void :
 	
 	print("Game Over!")
 	queue_free()
+
+
+func heal(amount: int) -> int:
+	health += amount
+	if health > max_health:
+		health = max_health
+	return health

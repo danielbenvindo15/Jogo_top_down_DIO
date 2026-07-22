@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://bugh8g0mr7c6r"]
 
 [ext_resource type="PackedScene" uid="uid://ddau2ymi7i01d" path="res://player/player.tscn" id="1_813cp"]
+[ext_resource type="PackedScene" uid="uid://boouywsuln5ie" path="res://misc/ritual.tscn" id="1_pxdra"]
 [ext_resource type="PackedScene" uid="uid://ce3o6lxxfh7iy" path="res://enemies/pawn.tscn" id="2_3ebtb"]
 [ext_resource type="PackedScene" uid="uid://hidrmlxke8k1" path="res://enemies/sheep.tscn" id="3_egjq0"]
 [ext_resource type="PackedScene" uid="uid://bhhury7hdfg35" path="res://enemies/goblin.tscn" id="4_jx2hq"]
+[ext_resource type="Texture2D" uid="uid://c4iu0fmo4awhd" path="res://assets/Kenney's Particle Pack/magic_01.png" id="6_a3q5n"]
 
 [node name="TestBattle" type="Node2D" unique_id=329632528]
 
@@ -33,3 +35,12 @@ position = Vector2(123, 444)
 
 [node name="Goblin" parent="." unique_id=2029867668 instance=ExtResource("4_jx2hq")]
 position = Vector2(904, 301)
+
+[node name="Magic01" type="Sprite2D" parent="." unique_id=155230945]
+visible = false
+position = Vector2(303, 89)
+scale = Vector2(3.1484375, 3.1484375)
+texture = ExtResource("6_a3q5n")
+
+[node name="Ritual" parent="." unique_id=1697042073 instance=ExtResource("1_pxdra")]
+position = Vector2(304, 142)
