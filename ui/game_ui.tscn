@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://lkmltuo2051q"]
+
+[ext_resource type="Texture2D" uid="uid://bqqp53xajjt8a" path="res://assets/Tiny Swords/UI/Banners/Banner_Horizontal.png" id="1_dcmab"]
+[ext_resource type="Script" uid="uid://deu7xiomtqwne" path="res://ui/game_ui.gd" id="1_w46tp"]
+[ext_resource type="Texture2D" uid="uid://bpmvhj7r3634h" path="res://assets/Tiny Swords/Resources/Resources/M_Idle_(NoShadow).png" id="3_7hrjk"]
+
+[sub_resource type="SystemFont" id="SystemFont_7hrjk"]
+font_names = PackedStringArray("Cascadia Mono")
+font_weight = 999
+
+[sub_resource type="LabelSettings" id="LabelSettings_pylni"]
+font = SubResource("SystemFont_7hrjk")
+font_size = 32
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lyknc"]
+texture = ExtResource("1_dcmab")
+texture_margin_left = 32.0
+texture_margin_top = 16.0
+texture_margin_right = 32.0
+texture_margin_bottom = 48.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+region_rect = Rect2(32, 48, 128, 128)
+
+[sub_resource type="SystemFont" id="SystemFont_3vkek"]
+font_names = PackedStringArray("Cascadia Mono")
+font_italic = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_j7v7t"]
+font = SubResource("SystemFont_3vkek")
+font_size = 32
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pylni"]
+atlas = ExtResource("3_7hrjk")
+region = Rect2(40, 48, 56, 56)
+
+[node name="GameUI" type="CanvasLayer" unique_id=660394261]
+script = ExtResource("1_w46tp")
+
+[node name="TimerLabel" type="Label" parent="." unique_id=908320439]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -45.5
+offset_top = 23.0
+offset_right = 45.5
+offset_bottom = 46.0
+grow_horizontal = 2
+text = "08:50"
+label_settings = SubResource("LabelSettings_pylni")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel3" type="Panel" parent="." unique_id=318325983]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -386.0
+offset_top = 29.0
+offset_right = -33.0
+offset_bottom = 124.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_lyknc")
+
+[node name="MeatLabel" type="Label" parent="Panel3" unique_id=1081823187]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.5
+offset_top = -39.5
+offset_right = -13.5
+offset_bottom = 5.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "50"
+label_settings = SubResource("LabelSettings_j7v7t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel3" unique_id=674224922]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -127.5
+offset_top = -47.5
+offset_right = 0.5
+offset_bottom = 80.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = SubResource("AtlasTexture_pylni")

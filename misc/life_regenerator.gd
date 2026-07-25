@@ -16,6 +16,7 @@ func on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		var player: Player = body #Variável que importa as propriedades do player para o script.
 		player.heal(regenteration_amount) #Invoca a função de curar do Player
+		player.meat_collected.emit(regenteration_amount)
 		queue_free() #Destrói o objeto
 	
 	

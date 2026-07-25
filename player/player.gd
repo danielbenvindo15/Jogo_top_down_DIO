@@ -7,7 +7,7 @@ extends CharacterBody2D
 @onready var sword_area: Area2D = $SwordArea
 @onready var hitbox_area: Area2D = $HitboxArea
 @onready var hitbox_cooldown: float = 0.0
-
+@onready var health_bar: ProgressBar = $HealthBar
 
 #Variáveis booleanas
 var attackAnimation1: bool = true  #Variável responsável pelo switch das animações 1 e 2 de ataque
@@ -48,6 +48,13 @@ var direction: Vector2 = Vector2(0, 0)
 @export var death_prefab: PackedScene
 
 
+signal  meat_collected(value:int)
+
+
+func _ready() -> void:
+	GameManager.player = self # Determina o valor da variavel player do script game_manager.
+
+
 func _process(delta: float) -> void:
 	GameManager.player_position = position
 
@@ -86,8 +93,12 @@ func _process(delta: float) -> void:
 			sprite.flip_h = true
 			pass
 	
-	#Processar dano
+	# Processar dano:
 	update_hitbox_detection(delta)
+	
+	# Atualiza barra de vida:
+	health_bar.max_value = max_health
+	health_bar.value = health
 
 
 func _physics_process(delta: float) -> void: #Essa função é executada em uma frequência fixa na qual se mantem a mesma independente do fps, sendo essa função recomendada para executar a física do jogo.

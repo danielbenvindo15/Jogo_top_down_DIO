@@ -248,8 +248,15 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_rkbax"]
 radius = 164.01219
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_g1dw6"]
-radius = 30.016663
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yw30f"]
+radius = 10.795457
+height = 27.459578
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yw30f"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qjkh3"]
+bg_color = Color(1, 0, 0, 1)
 
 [node name="Player" type="CharacterBody2D" unique_id=1691786204 groups=["player"]]
 motion_mode = 1
@@ -275,6 +282,7 @@ libraries/ = SubResource("AnimationLibrary_g1dw6")
 autoplay = &"Player_Idle"
 
 [node name="SwordArea" type="Area2D" parent="." unique_id=605923390]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SwordArea" unique_id=1894186929]
 position = Vector2(0, -22)
@@ -285,6 +293,24 @@ debug_color = Color(0.96862745, 0.011764706, 0, 0.05882353)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea" unique_id=1565923248]
 position = Vector2(0, -28)
-scale = Vector2(0.8799982, 0.99999994)
-shape = SubResource("CircleShape2D_g1dw6")
+scale = Vector2(1.7599996, 2.18503)
+shape = SubResource("CapsuleShape2D_yw30f")
 debug_color = Color(0.9882353, 0, 0, 0.16078432)
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=2017509199]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = 11.0
+offset_right = 38.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_yw30f")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qjkh3")
+value = 50.0
+show_percentage = false
