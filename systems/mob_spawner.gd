@@ -17,6 +17,23 @@ func _process(delta: float) -> void:
 	var interval = 60.0 / mobs_per_minute
 	cooldown = interval
 	
+	##Checar se o ponto é válido:
+	# Atribui a criatura a posição de spawn
+	var point = get_point() 
+	
+	#Traz as informações do mundo 2D
+	var world_state = get_world_2d().direct_space_state
+	
+	
+	var parameters = PhysicsPointQueryParameters2D.new() #Cria um objeto de parametros no script e armazena as informações desse objeto
+	parameters.position = point
+	
+	var result: Array = world_state.intersect_point(parameters, 1)
+	
+	if not result.is_empty():
+		return
+	
+	
 	##Instanciar criatura aleatória
 	# Pegar criatura aleatória
 	var index = randi_range(0, creatures.size() - 1)
@@ -26,7 +43,7 @@ func _process(delta: float) -> void:
 	var creature = creature_scene.instantiate()
 	
 	# Spawnar criatura
-	creature.global_position = get_point()  # Atribui a criatura a posição de spawn
+	creature.global_position = point  
 	
 	# Define o parent/parentesco da criatura (de quem ela é um child node)
 	get_parent().add_child(creature)

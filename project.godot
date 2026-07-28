@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Jogo Top Down DIO"
-run/main_scene="uid://bqdkd43tj62je"
+run/main_scene="uid://diws54xmyijym"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
