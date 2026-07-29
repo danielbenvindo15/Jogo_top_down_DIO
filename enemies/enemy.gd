@@ -1,10 +1,16 @@
 class_name Enemy
 extends Node2D
 
-
+@export_category("Life")
 @export var health: int = 10
 @export var death_prefab: PackedScene
 var damage_digit_prefab: PackedScene
+
+@export_category("Drops")
+@export var drop_chance: float = 0.1
+@export var drop_items: Array[PackedScene]
+@export var drop_chances: Array[float]
+
 @onready var damage_digit_marker = $DamageDigitMarker
 
 func _ready() -> void:
@@ -48,9 +54,49 @@ func damage(amount: int) -> void:
 
 
 func die() -> void :
+	##Invoca caveira
 	if death_prefab:   # Verifica se o death prefab está na cena
 		var death_object = death_prefab.instantiate()
 		death_object.position = position
 		get_parent().add_child(death_object)
 
+	##Drop
+	if randf() <= drop_chance:
+		drop_item()
+	##Deletar Node
 	queue_free()
+
+func drop_item() -> void:
+	var drop = get_random_drop_item().instantiate()
+	drop.position = position
+	get_parent().add_child(drop)
+
+
+##------------- Função para drop de items ------------------#
+func get_random_drop_item() -> PackedScene:
+	
+	if drop_items.size() == 1: # Sistema para evitar erro caso a lista de drops tiver apenas 1 drop nela
+		return drop_items[0]
+	
+	##Calcular chance máxima (A soma de todas as chances de todos os drops)
+	var max_chance: float = 0.0
+	for drop_chance in drop_chances: 
+		max_chance += drop_chance
+	
+	##Essa variável é como se jogasse um "dado" em um lugar aleatório da nossa lista
+	var random_value = randf() * max_chance
+	
+	##Estrutura de repetição que verifica em qual item o random_value parou
+	var needle: float = 0.0
+	
+	 # - Passa uma "agulha" por todos os itens da variavel drop_items pra encontrar em qual lugar o "dado" foi jogado
+	for i in drop_items.size():
+		var drop_item = drop_items[i]
+		var drop_chance = drop_chances[i] if i < drop_chances.size() else 1 # Vê se o "dado" passou por esse lugar
+		
+		#Finaliza a estrutura de repetição
+		if random_value <= drop_chance + needle:
+			return drop_item
+		needle += drop_chance
+	
+	return drop_items[0]
