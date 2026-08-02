@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://diws54xmyijym"]
 
 [ext_resource type="Texture2D" uid="uid://bmav3ahx1s5gk" path="res://assets/Tiny Swords/Terrain/Ground/Tilemap_Flat.png" id="1_1bvp3"]
+[ext_resource type="Script" uid="uid://b4kr1ewbt1f6v" path="res://main.gd" id="1_272bh"]
 [ext_resource type="PackedScene" uid="uid://ddau2ymi7i01d" path="res://player/player.tscn" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://ct4p6tv05g76f" path="res://systems/mob_spawner.tscn" id="2_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://b5xg7imodrmqv" path="res://assets/Tiny Swords/Terrain/Water/Foam/Foam.png" id="2_7mycd"]
 [ext_resource type="PackedScene" uid="uid://lkmltuo2051q" path="res://ui/game_ui.tscn" id="3_lquwl"]
 [ext_resource type="Texture2D" uid="uid://b6anm8r7yttim" path="res://assets/Tiny Swords/Terrain/Water/Water.png" id="6_272bh"]
+[ext_resource type="PackedScene" uid="uid://dhx1jd0rtsj18" path="res://ui/game_over_ui.tscn" id="7_272bh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lquwl"]
 texture = ExtResource("1_1bvp3")
@@ -110,7 +112,10 @@ size = Vector2(3302, 498)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_272bh"]
 size = Vector2(819, 1326.5)
 
-[node name="Main" type="Node2D" unique_id=484841289]
+[node name="Main" type="Node2D" unique_id=484841289 node_paths=PackedStringArray("game_ui")]
+script = ExtResource("1_272bh")
+game_ui = NodePath("GameUI")
+game_over_ui_template = ExtResource("7_272bh")
 
 [node name="TileMap" type="TileMap" parent="." unique_id=2103478760]
 tile_set = SubResource("TileSet_7mycd")

@@ -9,6 +9,9 @@ var cooldown: float = 0.0
 
 ##-------------------- Função para criar inimigos -----------------------##
 func _process(delta: float) -> void:
+	##Para o script se o jogo acabou
+	if GameManager.is_game_over: return
+	
 	##Temporizador (cooldown):
 	cooldown -= delta
 	if cooldown > 0: return

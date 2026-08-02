@@ -53,6 +53,7 @@ signal  meat_collected(value:int)
 
 func _ready() -> void:
 	GameManager.player = self # Determina o valor da variavel player do script game_manager.
+	meat_collected.connect(func(value: int): GameManager.meat_counter += 1)
 
 
 func _process(delta: float) -> void:
@@ -284,6 +285,8 @@ func damage(amount: int) -> void:
 
 
 func die() -> void :
+	GameManager.end_game()
+	
 	if death_prefab:
 		var death_object = death_prefab.instantiate()
 		death_object.position = position

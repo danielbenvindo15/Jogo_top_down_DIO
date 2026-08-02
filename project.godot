@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Jogo Top Down DIO"
+config/name="Jogo Top Down DIO Daniel"
 run/main_scene="uid://diws54xmyijym"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
@@ -18,6 +18,10 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameManager="*uid://cr8ds7aru5a28"
+
+[display]
+
+window/stretch/mode="viewport"
 
 [global_group]
 

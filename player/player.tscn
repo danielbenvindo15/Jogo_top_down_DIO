@@ -262,7 +262,7 @@ bg_color = Color(1, 0, 0, 1)
 motion_mode = 1
 script = ExtResource("1_rkbax")
 ritual_damage = 2
-ritual_interval = 15.0
+ritual_interval = 40.0
 ritual_scene = ExtResource("2_yw30f")
 death_prefab = ExtResource("2_g1dw6")
 

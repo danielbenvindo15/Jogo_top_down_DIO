@@ -63,8 +63,13 @@ func die() -> void :
 	##Drop
 	if randf() <= drop_chance:
 		drop_item()
+
+	##Incrementar contador
+	GameManager.monsters_defeated_counter += 1
+	
 	##Deletar Node
 	queue_free()
+
 
 func drop_item() -> void:
 	var drop = get_random_drop_item().instantiate()

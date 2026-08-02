@@ -20,6 +20,8 @@ func _ready():
 	pass
 
 func _physics_process(delta: float) -> void:
+	# Para o código se o Player morreu:
+	if GameManager.is_game_over: return
 	
 	#--------- Movimentação do inimigo -----------------#
 	
